@@ -1,0 +1,63 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '3.4.4'
+    id 'io.spring.dependency-management' version '1.1.7'
+    id 'com.diffplug.spotless' version '7.0.2'
+}
+
+group = 'com.example'
+version = '0.0.1-SNAPSHOT'
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
+
+tasks.named('bootRun') {
+    systemProperty 'spring.profiles.active', 'dev'
+}
+
+tasks.named('check') {
+    dependsOn('spotlessApply')
+}
+
+spotless {
+    // optional: limit format enforcement to just the files changed by this feature branch
+    ratchetFrom 'origin/main'
+
+    format 'misc', {
+        // define the files to apply `misc` to
+        target '*.gradle'
+
+        // define the steps to apply to those files
+        trimTrailingWhitespace()
+        leadingTabsToSpaces()
+        endWithNewline()
+    }
+
+    java {
+        // don't need to set target, it is inferred from java
+        // apply a specific flavor of google-java-format
+        // optional: you can also format Javadocs, requires at least Palantir 2.39.0
+        palantirJavaFormat().formatJavadoc(false)
+        // fix formatting of type annotations
+        formatAnnotations()
+    }
+}
