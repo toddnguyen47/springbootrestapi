@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<checkstyle xmlns="http://checkstyle.sourceforge.net/schema/xml"
+           xsi:schemaLocation="http://checkstyle.sourceforge.net/schema/xml
+                               http://checkstyle.sourceforge.net/schema/xml/checkstyle-8.0.xsd"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <module name="Checker">
+        <module name="TreeWalker">
+            <!-- Indentation: 4 spaces per indentation level -->
+            <module name="Indentation">
+                <property name="basicOffset" value="4"/>
+                <property name="braceAdjustment" value="0"/>
+                <property name="lineWrapping" value="0"/>
+            </module>
+
+            <!-- Naming conventions for classes, methods, variables -->
+            <module name="NamingConvention">
+                <property name="format" value="^[a-z][a-zA-Z0-9]*$"/>
+                <property name="case" value="camelCase"/>
+            </module>
+
+            <!-- Line length limit -->
+            <module name="LineLength">
+                <property name="max" value="100"/>
+                <property name="ignorePattern" value="^package .*|^import .*"/>
+            </module>
+
+            <!-- Modifier ordering: public, protected, private, then other modifiers -->
+            <module name="ModifierOrder">
+                <property name="requiredModifiers" value="public,protected,private,abstract,static,final,transient,volatile,synchronized"/>
+            </module>
+
+            <!-- Check for Javadoc comments for public methods and classes -->
+            <module name="JavadocMethod">
+                <property name="allowMissing" value="false"/>
+            </module>
+
+            <module name="JavadocType">
+                <property name="allowMissing" value="false"/>
+            </module>
+
+            <!-- Avoid unused imports -->
+            <module name="UnusedImports"/>
+        </module>
+    </module>
+</checkstyle>
